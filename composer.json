@@ -1,0 +1,17 @@
+{
+    "name": "jaypha/user_upload",
+    "description": "Processes entries loaded from a CSV file and stores them in a database.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Jaypha\\UserUpload\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jason den Dulk",
+            "email": "jason@jaypha.com.au"
+        }
+    ],
+    "require": {}
+}
