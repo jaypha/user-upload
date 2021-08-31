@@ -1,0 +1,23 @@
+Work Diary for user_upload
+
+
+Basic script outline
+
+- process command line arguments
+- process input
+- create database if requested
+- save entries
+
+Considerations
+- Use my own mysqli package?
+- Use my own database creation tool?
+- Use InnoDB and transactions?
+
+Question for Catalyst
+Q1: When an invalid entry is found, does 'no insert' refer to that entry alone, or the
+ whole input?
+
+Q2: Create a private or public account?
+
+.........
+
