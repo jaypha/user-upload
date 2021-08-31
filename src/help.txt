@@ -1,0 +1,14 @@
+Usage:
+  user_upload [--create_table] [--file <filename>] [--dry_run] [-u <username>] [-p <password>] [-h <host>] [--help]
+
+  One of either create_table, file, or help must be provided.
+
+Options:
+  --create_table     Will create the database table. If the table already exists, it will be dropped and recreated.
+  --file <filename>  Will load <filename> as a CSV file and use it as the input source.
+  --dry_run          When used with --file, will cause the input to be processed, but no insertions into the database will be made.
+  -u <username>      The username to access the database.
+  -p <password>      The password to access the database
+  -h <hostname>      The host name of the database server, will default to 'localhost'
+  --help             Print out this help message
+

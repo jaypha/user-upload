@@ -13,5 +13,10 @@
             "email": "jason@jaypha.com.au"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "require": {
+        "nette/command-line": "^1.5"
+    }
 }

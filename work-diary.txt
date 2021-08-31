@@ -21,3 +21,9 @@ Q2: Create a private or public account?
 
 .........
 
+Start with command line processing.
+- Use Nette's command line tool
+- Create unit tests
+- Create a stub
+
+
