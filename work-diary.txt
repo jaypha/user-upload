@@ -49,4 +49,15 @@ Basic outline
 - should we output progress? Assume no
 
 
+.......................
+
+- done with reading and processing. Only entering into database is left.
+- how to handle duplicate entries?
+- easy to check if email already exists in input set, but need to also check against
+ existing entries in database.
+- do we also check against the database in a dry run?
+- do the order of the error messages about invalid input neeed to match order of
+ the input?
+
+- I'm thinking I need a class for file processing.
 

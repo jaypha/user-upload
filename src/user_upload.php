@@ -3,7 +3,7 @@
 require __DIR__."/../vendor/autoload.php";
 
 require_once __DIR__."/cmd_line.php";
-require_once __DIR__."/do_file_stub.php";
+require_once __DIR__."/do_file.php";
 require_once __DIR__."/do_create.php";
 
 
@@ -16,7 +16,13 @@ function main() {
 
     switch ($params["command"]) {
       case "file":
-        do_file($params);
+        do_file(
+          $params["fileName"],
+          $params["isDryRun"],
+          $params["userName"],
+          $params["password"],
+          $params["hostName"]
+        );
         break;
 
       case "create":
@@ -35,7 +41,7 @@ function main() {
         throw new \LogicException("Unknown command {$params["command"]}");
     }
   } catch (\Exception $e) {
-    echo "Error: ", $e->getMessage();
+    echo "Error: ", $e->getMessage(), "\n";
     return 1;
   }
 
