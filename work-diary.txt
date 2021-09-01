@@ -27,3 +27,26 @@ Start with command line processing.
 - Create a stub
 
 
+.........
+
+Create/Recreate tables
+
+Wipe table if re-createing? Assume yes.
+Make SQL a static text file.
+Note: There is no specification of what the database is, nor any means of specifying
+the database.
+Name the database 'user_store'.
+No need to use fixdb. 
+
+Basic outline
+- make conenction
+- check for db existance
+- create db if not exists
+- check for table existance
+- drop if exists.
+- create table.
+
+- should we output progress? Assume no
+
+
+

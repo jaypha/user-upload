@@ -3,7 +3,8 @@
 require __DIR__."/../vendor/autoload.php";
 
 require_once __DIR__."/cmd_line.php";
-require_once __DIR__."/command_stub.php";
+require_once __DIR__."/do_file_stub.php";
+require_once __DIR__."/do_create.php";
 
 
 function main() {
@@ -19,7 +20,11 @@ function main() {
         break;
 
       case "create":
-        do_create($params);
+        do_create(
+          $params["userName"],
+          $params["password"],
+          $params["hostName"]
+        );
         break;
 
       case "help":

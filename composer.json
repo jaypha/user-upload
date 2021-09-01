@@ -17,6 +17,7 @@
         "phpunit/phpunit": "^9.5"
     },
     "require": {
-        "nette/command-line": "^1.5"
+        "nette/command-line": "^1.5",
+        "jaypha/mysqli-ext": "^0.1.8"
     }
 }
