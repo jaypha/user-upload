@@ -15,7 +15,7 @@ require_once __DIR__."/consts.php";
  * @param string $hostName THe host used to access the database
  */
 
-function do_file(string $fileName, bool $isDryRun, string $userName, string $password, string $hostName) {
+function do_file(string $fileName, bool $isDryRun, string $userName, string $password, string $hostName) : void {
 
   $uploader = new UserUpload($userName, $password, $hostName);
   $uploader->process($fileName, $isDryRun);
@@ -24,7 +24,9 @@ function do_file(string $fileName, bool $isDryRun, string $userName, string $pas
     echo $error,"\n";
 }
 
-
+/**
+ * Manages the process of reading and porcessing the input and updating the database.
+ */
 class UserUpload {
 
   private $database = null;
@@ -37,6 +39,7 @@ class UserUpload {
   private $errors;
 
   private $processedEmails;
+
   /**
    * Creates the object, but takes no furhter action.
    *
@@ -50,7 +53,7 @@ class UserUpload {
     $this->userName = $userName;
   }
 
-  protected function clean() { 
+  protected function clean() : void { 
     $this->processedLines = [];
     $this->errors = [];
     $this->processedEmails = [];
@@ -62,7 +65,7 @@ class UserUpload {
    * @param string $fileName Name of the input file to process. Must be a CSV file
    * @param string $isDryRun if true, then records are not to be entered into database.
    */
-  function process(string $fileName, bool $isDryRun) {
+  function process(string $fileName, bool $isDryRun) : void {
 
     $this->database = new MySQLiExt($this->hostName, $this->userName, $this->password);
     if (!$this->database->tableExists(DATABASE_NAME.".".TABLE_NAME))
@@ -85,7 +88,7 @@ class UserUpload {
 
   // Reads, validates, and processes input from a CSV file.
 
-  protected function read_csv_to_array(string $fileName) {
+  protected function read_csv_to_array(string $fileName) : void {
     $stream = @fopen($fileName, "r");
     if ($stream === false)
       throw new \RuntimeException(error_get_last()["message"]);
@@ -148,7 +151,7 @@ class UserUpload {
 
   // Check for duplicates both already in the database, and in the current input.
 
-  protected function check_duplicate(array $row) {
+  protected function check_duplicate(array $row) : bool {
     if (in_array($row["email"], $this->processedEmails))
     {
       $this->errors[] = "Email address '{$row["email"]}' already processed";
@@ -170,9 +173,9 @@ class UserUpload {
     return true;
   }
 
- // Processes a single line of input, performing required transformions.
+  // Processes a single line of input, performing required transformions.
 
-  protected function process_line(array $row)
+  protected function process_line(array $row) : array 
   {
     // Assumes that the row has been validated.
     return [

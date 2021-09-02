@@ -11,7 +11,7 @@ require_once __DIR__."/consts.php";
  * @param string $password Password to access the database
  * @param string $hostName THe host used to access the database
  */
-function do_create(string $userName, string $password, string $hostName) {
+function do_create(string $userName, string $password, string $hostName) : void {
   $database = new MySQLiExt($hostName, $userName, $password);
 
   $dbName = $database->real_escape_string(DATABASE_NAME);

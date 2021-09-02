@@ -14,15 +14,19 @@ const DEFAULT_DB_HOSTNAME = "localhost";
 /**
  * Prints help info about the command line directives to stdout.
  */
-function print_command_line_help()
+function print_command_line_help() : void
 {
   require HELP_FILE;
 }
 
 /**
  * Parse the comamnd line and return the parameters in an associative array.
+ *
+ * @param array $args The command line arguments in a array.
+ *
+ * @return array The options gleaned from the args.
  */
-function parse_command_line(array $args)
+function parse_command_line(array $args) : array
 {
   $params = [
     "hostName" => DEFAULT_DB_HOSTNAME

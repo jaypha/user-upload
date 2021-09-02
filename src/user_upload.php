@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * A script to read a set of entries from a CSV source file, process them, and place
+ * them into a database.
+ *
+ * See help.txt for a synopsis of the comamnd line.
+ */
+
 require __DIR__."/../vendor/autoload.php";
 
 require_once __DIR__."/cmd_line.php";

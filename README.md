@@ -8,9 +8,9 @@ The script takes an input from a CSV file and saves the entries into a MySQL dat
 table.
 
 ## Synopsis
-
+```
 Usage:
-  user_upload [--create_table] [--file <filename>] [--dry_run] [-u <username>] [-p <password>] [-h <host>] [--help]
+  php user_upload.php [--create_table] [--file <filename>] [--dry_run] [-u <username>] [-p <password>] [-h <host>] [--help]
 
   One of either create_table, file, or help must be provided.
 
@@ -22,27 +22,41 @@ Options:
   -p <password>      The password to access the database
   -h <hostname>      The host name of the database server, will default to 'localhost'
   --help             Print out this help message
-
+```
 
 ## Dependencies
 
 The project depends on the following packages.
 
 #### APT
--php-mysqli
+`sudo apt-get install php-mysqli`
 
 #### Packagist
 
--phpunit/phpunit
--jaypha/mysqli-ext
--nette/command-line
+These packages require Composer to be installed on your system. See 
+`https://getcomposer.org/` for installation.
 
+- phpunit/phpunit
+- jaypha/mysqli-ext
+- nette/command-line
+
+Run `composer install` to install them.
 
 ## Assumptions
 
-- The database where the table is to be stored is called 'user_store'. If it does not
-exist, then it will be created. Therefore the user is assumed to have create database
-priviliges.
+- No specification is provided about the database name. This project makes it 'user_store'. If it does not exist, then it will be created. Therefore the user is assumed to have create database
+privileges.
+- The user is also assumed to have create and drop table privileges.
 - The table is to be recreated each time when --create_table is invoked. Therefore,
 the table is dropped before creating, erasing any existing content.
 - No output is given on successful execution.
+- Missing fields are considered errors.
+- Duplicate email entries are also considered errors. Only the first one is inserted.
+
+
+## Testing
+
+In order to carry out unit testing, the file phpunit.xml needs to be edited to insert
+the database access parameters: hostname, username and password, for DB_HOST, DB_USER
+and DB_PASSWD respectivel.
+

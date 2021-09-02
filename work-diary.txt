@@ -55,9 +55,9 @@ Basic outline
 - how to handle duplicate entries?
 - easy to check if email already exists in input set, but need to also check against
  existing entries in database.
-- do we also check against the database in a dry run?
+- do we also check against the database in a dry run? assume yes
 - do the order of the error messages about invalid input neeed to match order of
- the input?
+ the input? make it yes.
 
 - I'm thinking I need a class for file processing.
-
+ It makes checking for duplicates less complicated.
