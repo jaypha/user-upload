@@ -5,39 +5,64 @@ require_once __DIR__."/../src/do_file.php";
 use Jaypha\MySQLiExt;
 use PHPUnit\Framework\TestCase;
 
+class UploaderTester extends UserUpload {
+
+  function clearOut() { 
+    $this->clean();
+  }
+
+  function test_read_csv_to_array(string $fileName) {
+    $this->csv_to_array($fileName);
+  }
+
+  function test_validate_line(array $row) : bool {
+    return $this->validate_line($row);
+  }
+
+  function test_process_line(array $row) : array {
+    return $this->process_line($row);
+  }
+}
+
 class DoFileTest extends TestCase {
 
-  const INPUT_FILE = __DIR__."/users.csv";
-  const EXPECTED_PROCESSED_FILE = [
-    [ "name" => "John", "surname" => "Smith", "email" => "jsmith@gmail.com" ],
-    [ "name" => "Hamish", "surname" => "Jones", "email" => "ham@seek.com" ],
-    [ "name" => "Phil", "surname" => "Carry", "email" => "phil@open.edu.au" ],
-    [ "name" => "Johnny", "surname" => "O'Hare", "email" => "john@yahoo.com.au" ],
-    [ "name" => "Mike", "surname" => "O'Connor", "email" => "mo'connor@cat.net.nz" ],
-    [ "name" => "William", "surname" => "Smythe", "email" => "happy@ent.com.au" ],
-    [ "name" => "Hamish", "surname" => "Jones", "email" => "ham@seek.com" ],
-    [ "name" => "Sam!!", "surname" => "Walters", "email" => "sam!@walters.org" ],
-    [ "name" => "Daley", "surname" => "Thompson", "email" => "daley@yahoo.co.nz" ],
-    [ "name" => "Kevin", "surname" => "Ruley", "email" => "kevin.ruley@gmail.com" ],
-//    [ "name" => "Edward", "surname" => "Jikes", "email" => "dward@jikes@com.au" ],
-  ];
+  protected static $uploader;
+
+  public static function setUpBeforeClass(): void {
+    self::$uploader = new UploaderTester(
+      $GLOBALS["DB_USER"],
+      $GLOBALS["DB_PASSWD"],
+      $GLOBALS["DB_HOST"],
+    );
+  }
 
   function testValidateLine() {
     $row = [ ];
-    $this->assertEquals("Name entry missing", validate_line($row));
+    self::$uploader->clearOut();
+    self::$uploader->test_validate_line($row);
+    $this->assertEquals(["Name entry missing"], self::$uploader->errors);
 
     $row["name"] = "x";
-    $this->assertEquals("Surame entry missing", validate_line($row));
+    self::$uploader->clearOut();
+    self::$uploader->test_validate_line($row);
+    $this->assertEquals(["Surname entry missing"], self::$uploader->errors);
 
     $row["surname"] = "y";
-    $this->assertEquals("Email entry missing", validate_line($row));
+    self::$uploader->clearOut();
+    self::$uploader->test_validate_line($row);
+    $this->assertEquals(["Email entry missing"], self::$uploader->errors);
 
     $row["email"] = "edward@jikes@com.au";
-    $this->assertEquals("Email address '{$row["email"]}' is invalid", validate_line($row));
+    self::$uploader->clearOut();
+    self::$uploader->test_validate_line($row);
+    $this->assertEquals(["Email address '{$row["email"]}' is invalid"], self::$uploader->errors);
 
     $row["email"] = "edward@jikes.com.au";
-    $this->assertFalse(validate_line($row));
+    self::$uploader->clearOut();
+    self::$uploader->test_validate_line($row);
+    $this->assertEquals([], self::$uploader->errors);
   }
+
 
   function testProcessLine() {
     $input = [
@@ -53,13 +78,7 @@ class DoFileTest extends TestCase {
     ];
 
     foreach ($input as $i => $v)
-      $this->assertEquals($expected[$i], process_line($v));
-  }
-
-  function testReadCsvToArray()
-  {
-    $response = read_csv_to_array(self::INPUT_FILE);
-    $this->assertEquals(self::EXPECTED_PROCESSED_FILE, $response["data"]);
+      $this->assertEquals($expected[$i], self::$uploader->test_process_line($v));
   }
 }
 
