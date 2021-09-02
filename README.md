@@ -44,6 +44,7 @@ Run `composer install` to install them.
 
 ## Assumptions
 
+- Decided to not use a shebang.
 - No specification is provided about the database name. This project makes it 'user_store'. If it does not exist, then it will be created. Therefore the user is assumed to have create database
 privileges.
 - The user is also assumed to have create and drop table privileges.
